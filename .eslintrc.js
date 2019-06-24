@@ -208,7 +208,13 @@ module.exports = {
         'no-unmodified-loop-condition': 'error',
         'no-unneeded-ternary': 'error',
         'no-unused-expressions': 'error',
-        'no-use-before-define': 'error',
+        'no-use-before-define': [
+            'error',
+            {
+                'functions': false,
+                'classes': false
+            }
+        ],
         'no-useless-call': 'error',
         'no-useless-catch': 'error',
         'no-useless-computed-key': 'error',

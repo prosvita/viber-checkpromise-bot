@@ -6,7 +6,7 @@
 # Встановлення залежностей
 npm i
 
-# Піднімаємо тунель балансера з https
+# Піднімаємо тунель до балансера з https
 [local ~]$ ssh -N -R 4040:localhost:4040 remotehost
 [remote ~]$ ssh -N -L remoteip:4040:127.0.0.1:4040 remotehost
 
