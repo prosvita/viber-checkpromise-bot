@@ -9,5 +9,5 @@ module.exports = {
     webhookUrl: process.env.VIBER_WEBHOOK_URL,
     dataUrl: process.env.DATA_JSON || 'http://127.0.0.1:8080/test/data.json',
     schedule: process.env.SCHEDULE || '*/15 * * * * *',
-    logLevel: process.env.LOG_LEVEL || 'info'
+    logLevel: process.env.LOG_LEVEL || 'debug'
 }
