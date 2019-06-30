@@ -1,4 +1,5 @@
 node_modules/
+playbook/roles
 .DS_Store
 TODO.md
 session.json

@@ -1,0 +1,63 @@
+---
+- name: Deploy (host)
+  hosts: "{{ deploy_group }}"
+  become: yes
+  become_method: sudo
+  tasks:
+
+  - name: Find free port for public interface
+    import_role:
+      name: levonet.ci_get_free_port
+    vars:
+      ci_get_free_port__var: project_bot_public_port
+      ci_get_free_port__pool: "{{ project_bot_port_pool }}"
+      ci_get_free_port__host: "{{ project_host }}"
+
+  - name: Ensure directories exist
+    file:
+      state: directory
+      path: "{{ item.path }}"
+      mode: "{{ item.mode | default(0755) }}"
+      owner: "{{ item.owner | default('root') }}"
+      group: "{{ item.group | default('root') }}"
+    with_items:
+    - path: "{{ project_bot_home }}"
+      mode: "0750"
+      group: jenkins
+    - path: "{{ project_bot_home }}/db"
+
+  - name: Copy nginx config
+    copy:
+      dest: /etc/nginx/sites-available/10-{{ project_bot_name }}.conf
+      content: "{{ project_bot_nginx_conf }}"
+
+  - name: Enable nginx config
+    file:
+      src: /etc/nginx/sites-available/10-{{ project_bot_name }}.conf
+      dest: /etc/nginx/sites-enabled/10-{{ project_bot_name }}.conf
+      state: link
+
+  - name: Test nginx config
+    command: docker exec -t nginx nginx -t
+
+  - name: Restart nginx
+    command: docker exec -t nginx nginx -s reload
+
+  - name: Run container
+    docker_container:
+      name: "{{ project_bot_name }}"
+      image: levonet/viber-checkpromise-bot:latest
+      pull: yes
+      restart_policy: always
+      env:
+        VIBER_TOKEN: "{{ project_bot_viber_token }}"
+        VIBER_WEBHOOK_URL: "https://{{ project_bot_webhook_host }}"
+        BITLY_ACCESS_TOKEN: "{{ project_bot_bitly_token }}"
+      ports:
+      - "{{ project_host }}:{{ project_bot_public_port }}:8000"
+      volumes:
+      - "{{ project_bot_home }}/db:/app/db"
+      log_driver: syslog
+      log_options:
+        syslog-facility: local0
+        tag: "{{ project_bot_name }}"

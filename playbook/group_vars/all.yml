@@ -1,0 +1,18 @@
+---
+project_host: "{{ hostvars[inventory_hostname].ansible_default_ipv4.address }}"
+
+project_bot_name: cp-viber-bot
+project_bot_home: /opt/{{ project_bot_name }}
+project_bot_public_port: 4040
+project_bot_port_pool: 4041-4099
+project_bot_webhook_host:
+project_bot_viber_token:
+project_bot_bitly_token:
+project_bot_nginx_conf: |
+  server {
+      include include/listen_ssl;
+      server_name {{ project_bot_webhook_host }};
+      location / {
+          proxy_pass http://{{ project_host }}:{{ project_bot_public_port }};
+      }
+  }

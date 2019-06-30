@@ -20,6 +20,11 @@
     "start": "node index.js",
     "dev": "$(npm bin)/nodemon -e js,json,yaml --ignore db/ --ignore test/ index.js",
     "dev-static": "$(npm bin)/http-server",
+    "install-roles": "ansible-galaxy install -r playbook/requirements.yml --roles-path playbook/roles",
+    "docker-build": "docker build -t levonet/viber-checkpromise-bot:latest .",
+    "docker-push": "docker push levonet/viber-checkpromise-bot:latest",
+    "deploy-ansible": "cd playbook; ansible-playbook deploy-host.yml -e deploy_group=all -e project_bot_viber_token=${VIBER_TOKEN} -e project_bot_webhook_host=${WEBHOOK_HOST} -e project_bot_bitly_token=${BITLY_TOKEN} -i ${INVENTORY_HOSTNAME},",
+    "deploy": "npm run docker-build; npm run docker-push; npm run install-roles; npm run deploy-ansible",
     "lint": "$(npm bin)/eslint .",
     "test": "npm run lint"
   },
