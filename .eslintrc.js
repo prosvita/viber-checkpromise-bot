@@ -14,7 +14,10 @@ module.exports = {
     },
     'rules': {
         'accessor-pairs': 'error',
-        'array-bracket-newline': 'error',
+        'array-bracket-newline': [
+            'error',
+            'consistent'
+        ],
         'array-bracket-spacing': 'error',
         'array-callback-return': 'error',
         'array-element-newline': 'error',
@@ -78,7 +81,7 @@ module.exports = {
                 'allowArrowFunctions': true
             }
         ],
-        'function-paren-newline': 'error',
+        'function-paren-newline': 'off',
         'generator-star-spacing': 'error',
         'global-require': 'error',
         'guard-for-in': 'error',
@@ -252,7 +255,7 @@ module.exports = {
         'prefer-arrow-callback': 'error',
         'prefer-const': 'error',
         'prefer-destructuring': 'error',
-        'prefer-named-capture-group': 'error',
+        'prefer-named-capture-group': 'off',
         'prefer-numeric-literals': 'error',
         'prefer-object-spread': 'error',
         'prefer-promise-reject-errors': 'error',

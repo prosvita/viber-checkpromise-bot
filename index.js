@@ -31,10 +31,13 @@ const bot = new ViberBot(logger, conf.viberConf)
 const state = new State(logger)
 const notifier = new Notifier(logger, bot)
 
-bot.onSubscribe(notifier.subscribe())
-bot.onUnsubscribe(notifier.unsubscribe())
+bot.on(BotEvents.CONVERSATION_STARTED, notifier.started())
+bot.on(BotEvents.SUBSCRIBED, notifier.subscribe())
+bot.on(BotEvents.UNSUBSCRIBED, notifier.unsubscribe())
 bot.on(BotEvents.MESSAGE_RECEIVED, notifier.received())
-bot.onTextMessage(/./u, notifier.anyText())
+bot.onTextMessage(/^\/subscribe$/iu, notifier.subscribed())
+bot.onTextMessage(/^[^\/].*/u, notifier.anyText()) /* eslint no-useless-escape: "off" */
+bot.onError((error) => logger.error(error))
 
 state.check()
 schedule.scheduleJob(conf.schedule, async () => {
