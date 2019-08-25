@@ -1,4 +1,5 @@
 # Viber bot для стеження за успіхами влади
+[![Build Status](https://travis-ci.org/prosvita/viber-checkpromise-bot.svg?branch=master)](https://travis-ci.org/prosvita/viber-checkpromise-bot)
 
 ## Розробка
 
