@@ -1,6 +1,7 @@
 node_modules/
 playbook/roles
 .DS_Store
+.vscode
 TODO.md
 session.json
 *.retry
