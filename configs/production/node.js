@@ -9,6 +9,6 @@ module.exports = {
     webhookUrl: process.env.VIBER_WEBHOOK_URL,
     bitlyAccessToken: process.env.BITLY_ACCESS_TOKEN,
     dataUrl: process.env.DATA_JSON || 'https://www.checkpromise.info/assets/data/data.json',
-    schedule: process.env.SCHEDULE || '0 9,16 * * *',
+    schedule: process.env.SCHEDULE || '0 10,17 * * *',
     logLevel: process.env.LOG_LEVEL || 'info'
 }
