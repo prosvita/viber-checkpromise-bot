@@ -30,7 +30,7 @@
   },
   "dependencies": {
     "bitly": "^7.0.1",
-    "got": "^9.6.0",
+    "got": "^11.8.5",
     "lodash-id": "^0.14.0",
     "loglevel": "^1.6.3",
     "lowdb": "^1.0.0",
